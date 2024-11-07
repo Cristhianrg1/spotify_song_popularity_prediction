@@ -129,7 +129,6 @@ def get_songs_data_by_release_date(
                 except requests.exceptions.RequestException as e:
                     print(f"Error al obtener características de audio: {e}")
 
-            # Obtener datos de los artistas en bloques
             unique_artist_ids = list(set(artist_ids))
             if unique_artist_ids:
                 try:
@@ -141,12 +140,12 @@ def get_songs_data_by_release_date(
                     print(f"Error al obtener datos de artistas: {e}")
 
             offset += limit
-            time.sleep(1)  # Pausa para evitar el límite de API
+            time.sleep(1)
 
         except requests.exceptions.RequestException as e:
             print(f"Error al realizar la búsqueda con el offset {offset}: {e}")
-            offset += limit  # Incrementar el offset para evitar bucles infinitos
-            time.sleep(5)  # Pausa en caso de error antes de continuar
+            offset += limit
+            time.sleep(5)
 
     session.close()
     return pd.DataFrame(all_songs_data)

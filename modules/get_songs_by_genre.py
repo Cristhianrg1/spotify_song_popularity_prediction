@@ -111,7 +111,6 @@ def get_songs_data_by_genre(genre, limit=50, max_results=10000):
                     }
                 )
 
-            # Obtener características de audio en bloques
             if track_ids:
                 try:
                     audio_features_list = fetch_audio_features(
@@ -123,7 +122,6 @@ def get_songs_data_by_genre(genre, limit=50, max_results=10000):
                 except requests.exceptions.RequestException as e:
                     print(f"Error al obtener características de audio: {e}")
 
-            # Obtener datos de los artistas en bloques
             unique_artist_ids = list(set(artist_ids))
             if unique_artist_ids:
                 try:
@@ -135,14 +133,14 @@ def get_songs_data_by_genre(genre, limit=50, max_results=10000):
                     print(f"Error al obtener datos de artistas: {e}")
 
             offset += limit
-            time.sleep(1)  # Pausa para evitar el límite de API
+            time.sleep(1)
 
         except requests.exceptions.RequestException as e:
             print(
                 f"Error al realizar la búsqueda de género {genre} en offset {offset}: {e}"
             )
-            offset += limit  # Aumentar el offset para evitar bucles infinitos
-            time.sleep(5)  # Pausa en caso de error antes de continuar
+            offset += limit
+            time.sleep(5)
 
     session.close()
     return pd.DataFrame(all_songs_data)
